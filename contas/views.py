@@ -1,5 +1,16 @@
 from django.shortcuts import render
-from django import db
+from .models import Pessoa
 
-def mostrar_hello(request):
+def mostrar_formulario_cadastro(request):
+  if request.method == 'POST':
+    pessoa = Pessoa()
+    pessoa.nome = request.POST['nome']
+    pessoa.cpf = request.POST['cpf']
+    pessoa.save()
+
   return render(request, 'index.html')
+
+def mostrar_pessoas(request):
+  pessoas = Pessoa.objects.all()
+
+  return render(request, 'pessoas.html', {'dados': pessoas})
